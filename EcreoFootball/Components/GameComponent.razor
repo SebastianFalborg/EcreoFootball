@@ -1,0 +1,29 @@
+﻿@using EcreoFootballApi
+
+<table>
+    <tr>
+        <th>Spil nummer</th>
+        <th>Blåt hold</th>
+        <th>Resultat</th>
+        <th>Rød hold</th>
+        <th>Resultat</th>
+    </tr>
+    <tr style="@GetTeamColor()">
+        <td>@Game.Order</td>
+        <td>@Game.BlueTeam.Players.First().Name, @Game.BlueTeam.Players.Last().Name</td>
+        <td>@Game.BlueTeamScore</td>
+        <td>@Game.RedTeam.Players.First().Name, @Game.RedTeam.Players.Last().Name</td>
+        <td>@Game.RedTeamScore</td>
+    </tr>
+</table>
+
+@code {
+    [Parameter]
+    public Game Game { get; set; }
+
+    private string GetTeamColor()
+    {
+        var backgroundColor = Game.BlueTeamScore > Game.RedTeamScore ? "lightblue" : "lightcoral";
+        return $"background-color: {backgroundColor}";
+    }
+}

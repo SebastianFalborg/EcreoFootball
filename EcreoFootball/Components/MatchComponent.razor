@@ -1,0 +1,13 @@
+﻿@using EcreoFootballApi
+
+<h3>Spiltid: @Match.Date.ToString("dd/MM/yyyy - HH:MM")</h3>
+
+@foreach (var game in Match.Games)
+{
+    <GameComponent Game="game"></GameComponent>
+}
+
+@code {
+    [Parameter]
+    public Match Match { get; set; }
+}
