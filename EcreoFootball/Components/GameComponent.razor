@@ -2,17 +2,17 @@
 
 <table>
     <tr>
-        <th>Spil nummer</th>
-        <th>Blåt hold</th>
-        <th>Resultat</th>
-        <th>Rød hold</th>
-        <th>Resultat</th>
+        <th width="35">Spil nummer</th>
+        <th width="200">Blåt hold</th>
+        <th width="35">Resultat</th>
+        <th width="200">Rød hold</th>
+        <th width="35">Resultat</th>
     </tr>
     <tr style="@GetTeamColor()">
         <td>@Game.Order</td>
-        <td>@Game.BlueTeam.Players.First().Name, @Game.BlueTeam.Players.Last().Name</td>
+        <td>@GetPlayerNames(Game.BlueTeam.Players)</td>
         <td>@Game.BlueTeamScore</td>
-        <td>@Game.RedTeam.Players.First().Name, @Game.RedTeam.Players.Last().Name</td>
+        <td>@GetPlayerNames(Game.RedTeam.Players)</td>
         <td>@Game.RedTeamScore</td>
     </tr>
 </table>
@@ -25,5 +25,10 @@
     {
         var backgroundColor = Game.BlueTeamScore > Game.RedTeamScore ? "lightblue" : "lightcoral";
         return $"background-color: {backgroundColor}";
+    }
+
+    private string GetPlayerNames(IEnumerable<Player> players)
+    {
+        return string.Join(", ", players.Select(x => x.Name));
     }
 }

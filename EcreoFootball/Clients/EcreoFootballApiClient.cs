@@ -54,7 +54,7 @@ namespace EcreoFootballApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Match>> GetMatchesAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Match>> GetMatchesAsync()
         {
             return GetMatchesAsync(System.Threading.CancellationToken.None);
         }
@@ -62,7 +62,7 @@ namespace EcreoFootballApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Match>> GetMatchesAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Match>> GetMatchesAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Match");
@@ -99,7 +99,7 @@ namespace EcreoFootballApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Match>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IEnumerable<Match>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -264,7 +264,7 @@ namespace EcreoFootballApi
         [System.Text.Json.Serialization.JsonPropertyName("games")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<Game> Games { get; set; }
+        public System.Collections.Generic.IEnumerable<Game> Games { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
 
@@ -291,7 +291,7 @@ namespace EcreoFootballApi
         [System.Text.Json.Serialization.JsonPropertyName("players")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<Player> Players { get; set; }
+        public System.Collections.Generic.IEnumerable<Player> Players { get; set; }
 
     }
 
