@@ -1,0 +1,8 @@
+﻿@using EcreoFootballApi
+
+<li>@player.Name : @player.Rating.ToString("N1")</li>
+
+@code {
+    [Parameter]
+    public Player player { get; set; }
+}

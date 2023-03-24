@@ -12,11 +12,11 @@
 
 @code
 {
-    private List<Match> matches = new();
+    private List<MatchDto> matches = new();
     
     protected override async Task OnInitializedAsync()
     {
-        string webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
+        var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
         var client = new Client(webApiBaseAddress, new HttpClient());
         matches = (await client.GetMatchesAsync()).ToList();
     }

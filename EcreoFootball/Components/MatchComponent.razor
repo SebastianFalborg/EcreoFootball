@@ -1,13 +1,48 @@
 ﻿@using EcreoFootballApi
 
-<h3>Spiltid: @Match.Date.ToString("dd/MM/yyyy - HH:MM")</h3>
-
-@foreach (var game in Match.Games)
-{
-    <GameComponent Game="game"></GameComponent>
-}
+<h3>Spiltid: @Match.Timestamp.ToString("dd/MM/yyyy - HH:mm")</h3>
+<table>
+    <tr>
+        <th width="35">Spil nummer</th>
+        <th width="200">Blåt hold</th>
+        <th width="35">Resultat</th>
+        <th width="200">Rød hold</th>
+        <th width="35">Resultat</th>
+    </tr>
+    <tr style="@GetTeamColor()">
+        <td>
+            <ul>
+            @foreach (var player in Match.BlueTeam)
+            {
+                <PlayerComponent player="player"/>
+            }
+            </ul>
+        </td>
+        <td>@Match.BlueScore</td>
+        <td>
+            <ul>
+            @foreach (var player in Match.RedTeam)
+            {
+                <PlayerComponent player="player"/>
+            }
+            </ul>
+        </td>
+        <td>@Match.RedScore</td>
+    </tr>
+</table>
 
 @code {
     [Parameter]
-    public Match Match { get; set; }
+    public MatchDto Match { get; set; }
+    
+    private string GetTeamColor()
+    {
+        var backgroundColor = Match.BlueScore > Match.RedScore ? "lightblue" : "lightcoral";
+        return $"background-color: {backgroundColor}";
+    }
+    
+    private string GetPlayerNames(IEnumerable<Player> players)
+    {
+        return string.Join(", ", players.Select(x => x.Name));
+    }
 }
