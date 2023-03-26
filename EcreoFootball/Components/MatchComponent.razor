@@ -10,7 +10,7 @@
     </tr>
     <tr style="@GetTeamColor()">
         <td>
-            <ul>
+            <ul class="no-bullets">
             @foreach (var player in Match.BlueTeam)
             {
                 <PlayerComponent player="player"/>
@@ -19,7 +19,7 @@
         </td>
         <td>@Match.BlueScore</td>
         <td>
-            <ul>
+            <ul class="no-bullets">
             @foreach (var player in Match.RedTeam)
             {
                 <PlayerComponent player="player"/>
