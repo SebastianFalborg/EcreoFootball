@@ -5,19 +5,28 @@
 
 <h1>Ecreo Football</h1>
 
-@foreach (var match in matches)
+<h2>Spillere</h2>
+@foreach (var player in _players)
+{
+    <p>@player.Name - @player.Rating</p>
+}
+
+<h2>Spil</h2>
+@foreach (var match in _matches)
 {
     <MatchComponent Match="match"></MatchComponent>
 }
 
 @code
 {
-    private List<MatchDto> matches = new();
+    private List<MatchDto> _matches = new();
+    private List<Player> _players = new();
     
     protected override async Task OnInitializedAsync()
     {
         var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
         var client = new Client(webApiBaseAddress, new HttpClient());
-        matches = (await client.GetMatchesAsync()).ToList();
+        _matches = (await client.GetMatchesAsync()).ToList();
+        _players = (await client.GetPlayersAsync()).ToList();
     }
 }
