@@ -1,0 +1,76 @@
+﻿@inject IConfiguration Configuration
+
+<h3>Create New Match</h3>
+
+<div class="form-group">
+    <label>Blue Team</label>
+    <select class="form-control" @onchange="SelectBlueTeamPlayer">
+        <option value="">Select player</option>
+        @foreach (var player in Players)
+        {
+            <option value="@player.Id">@player.Name</option>
+        }
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Red Team</label>
+    <select class="form-control" @onchange="SelectRedTeamPlayer">
+        <option value="">Select player</option>
+        @foreach (var player in Players)
+        {
+            <option value="@player.Id">@player.Name</option>
+        }
+    </select>
+</div>
+
+<button class="btn btn-primary" @onclick="CreateMatch">Create Match</button>
+
+@code {
+    private IEnumerable<Player> Players { get; set; } = new List<Player>();
+    private List<Player> SelectedBlueTeam { get; } = new();
+    private List<Player> SelectedRedTeam { get; } = new();
+
+    private Client? client = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
+        client = new Client(webApiBaseAddress, new HttpClient());
+        Players = await client.GetPlayersAsync();
+    }
+
+    private void CreateMatch()
+    {
+        var newMatch = new Match
+        {
+            BlueTeam = SelectedBlueTeam.Select(x => x.Id),
+            RedTeam = SelectedRedTeam.Select(x => x.Id),
+            Timestamp = DateTime.UtcNow
+        };
+
+        client?.CreateMatchAsync(newMatch);
+    }
+    
+    private void SelectBlueTeamPlayer(ChangeEventArgs e)
+    {
+        var playerId = e.Value?.ToString();
+        var player = Players.FirstOrDefault(p => p.Id == playerId);
+
+        if (player != null && !SelectedBlueTeam.Contains(player))
+        {
+            SelectedBlueTeam.Add(player);
+        }
+    }
+
+    private void SelectRedTeamPlayer(ChangeEventArgs e)
+    {
+        var playerId = e.Value?.ToString();
+        var player = Players.FirstOrDefault(p => p.Id == playerId);
+
+        if (player != null && !SelectedRedTeam.Contains(player))
+        {
+            SelectedRedTeam.Add(player);
+        }
+    }
+}

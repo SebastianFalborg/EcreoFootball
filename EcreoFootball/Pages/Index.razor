@@ -1,6 +1,4 @@
 ﻿@page "/"
-@using EcreoFootballApi
-@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
 <h1>Ecreo Football</h1>
@@ -10,6 +8,9 @@
 {
     <p>@player.Name - @player.Rating</p>
 }
+
+<h2>Tilføj spil</h2>
+<CreateMatch />
 
 <h2>Spil</h2>
 @foreach (var match in _matches)
