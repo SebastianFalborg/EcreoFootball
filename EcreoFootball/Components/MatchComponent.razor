@@ -1,32 +1,40 @@
-﻿<h3>Spiltid: @Match.Timestamp.ToString("dd/MM/yyyy - HH:mm")</h3>
-<table>
-    <tr>
-        <th width="200">Blåt hold</th>
-        <th width="35">Resultat</th>
-        <th width="200">Rød hold</th>
-        <th width="35">Resultat</th>
-    </tr>
-    <tr style="@GetTeamColor()">
-        <td>
-            <ul class="no-bullets">
-            @foreach (var player in Match.BlueTeam)
-            {
-                <PlayerComponent player="player"/>
-            }
-            </ul>
-        </td>
-        <td>@Match.BlueScore</td>
-        <td>
-            <ul class="no-bullets">
-            @foreach (var player in Match.RedTeam)
-            {
-                <PlayerComponent player="player"/>
-            }
-            </ul>
-        </td>
-        <td>@Match.RedScore</td>
-    </tr>
-</table>
+﻿<h5>Spiltid: @Match.Timestamp.ToString("dd/MM/yyyy - HH:mm")</h5>
+<BStable>
+    <BSTHead>
+        <BSTR>
+            <th width="200">Blåt hold</th>
+            <th width="35">Resultat</th>
+            <th width="200">Rød hold</th>
+            <th width="35">Resultat</th>
+        </BSTR>
+    </BSTHead>
+    <BSTBody>
+        <BSTR style="@GetTeamColor()">
+            <BSTD>
+                <ul class="no-bullets">
+                    @foreach (var player in Match.BlueTeam)
+                    {
+                        <PlayerComponent player="player"/>
+                    }
+                </ul>
+            </BSTD>
+            <BSTD>
+                @Match.BlueScore
+            </BSTD>
+            <BSTD>
+                <BSListGroup class="no-bullets">
+                    @foreach (var player in Match.RedTeam)
+                    {
+                        <PlayerComponent player="player"/>
+                    }
+                </BSListGroup>
+            </BSTD>
+            <BSTD>
+                @Match.RedScore
+            </BSTD>
+        </BSTR>
+    </BSTBody>
+</BStable>
 
 @code {
     [Parameter]

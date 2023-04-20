@@ -1,28 +1,49 @@
 ﻿@page "/"
 @inject IConfiguration Configuration
 
-<h1>Ecreo Football</h1>
+<BSContainer>
+    <BSRow>
+        <h1>Ecreo Football</h1>
+        <BSCol>
+            <h2>Spillere</h2>
+            <div class="d-flex flex-wrap">
+              @foreach (var player in _players)
+              {
+                  <BSCard CardType="CardType.Card" class="m-2" style="width: 12rem;">
+                      <BSCard CardType="CardType.Body">
+                          <BSCard CardType="CardType.Title">@player.Name</BSCard>
+                          <BSCard CardType="CardType.Text">
+                              <p>
+                                  <b>Rating</b>
+                              </p>
+                              @player.Rating.ToString("N1")
+                          </BSCard>
+                          <BSButton IsDisabled Color="BSColor.Primary">Profil</BSButton>
+                      </BSCard>
+                  </BSCard>
+              }
+            </div>
 
-<h2>Spillere</h2>
-@foreach (var player in _players)
-{
-    <p>@player.Name - @player.Rating</p>
-}
-
-<h2>Tilføj spil</h2>
-<CreateMatchComponent />
-
-<h2>Spil</h2>
-@foreach (var match in _matches)
-{
-    <MatchComponent Match="match"></MatchComponent>
-}
+        </BSCol>
+        <BSCol>
+            <h2>Tilføj spil</h2>
+            <CreateMatchComponent/>
+        </BSCol>
+    </BSRow>
+    <BSRow>
+        <h2>Spil</h2>
+        @foreach (var match in _matches)
+        {
+            <MatchComponent Match="match"></MatchComponent>
+        }
+    </BSRow>
+</BSContainer>
 
 @code
 {
     private List<MatchDto> _matches = new();
     private List<Player> _players = new();
-    
+
     protected override async Task OnInitializedAsync()
     {
         var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;

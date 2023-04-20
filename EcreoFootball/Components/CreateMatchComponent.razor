@@ -1,58 +1,48 @@
 ﻿@inject IConfiguration Configuration
 @inject NavigationManager Navigation
 
-<h3>Create New Match</h3>
-
-<div class="form-group">
-    <label>Blue Team</label>
-    @for (var i = 0; i < SelectedBlueTeam.Count + 1; i++)
-    {
-        <select class="form-control" style="margin-bottom: 5px;" @onchange="(e) => SelectBlueTeamPlayer(e, i)">
-            <option value="">Select player</option>
-            @foreach (var player in Players)
-            {
-                <option value="@player.Id" selected="@(SelectedBlueTeam.Count > i && SelectedBlueTeam[i].Id == player.Id)">@player.Name</option>
-            }
-        </select>
-    }
+<div class="input-group mb-4">
+    <span class="input-group-text">Blue Team</span>
+    <select class="form-control" size="5" multiple @onchange="SelectBlueTeam">
+        @foreach (var player in Players)
+        {
+            <option value="@player.Id">@player.Name</option>
+        }
+    </select>
 </div>
 
-<div class="form-group">
-    <label>Blue Team Score</label>
-    <input type="number" class="form-control" @bind="BlueTeamScore" min="0" />
+<div class="input-group mb-4">
+    <span class="input-group-text">Blue Team Score</span>
+    <BSInput InputType="InputType.Number" @bind-Value="BlueTeamScore" min="0" />
 </div>
 
-<div class="form-group">
-    <label>Red Team</label>
-    @for (var i = 0; i < SelectedRedTeam.Count + 1; i++)
-    {
-        <select class="form-control" style="margin-bottom: 5px;" @onchange="(e) => SelectRedTeamPlayer(e, i)">
-            <option value="">Select player</option>
-            @foreach (var player in Players)
-            {
-                <option value="@player.Id" selected="@(SelectedRedTeam.Count > i && SelectedRedTeam[i].Id == player.Id)">@player.Name</option>
-            }
-        </select>
-    }
+<div class="input-group mb-4">
+    <span class="input-group-text">Red Team</span>
+    <select class="form-control" size="5" multiple @onchange="SelectRedTeam">
+        @foreach (var player in Players)
+        {
+            <option value="@player.Id">@player.Name</option>
+        }
+    </select>
 </div>
 
-<div class="form-group">
-    <label>Red Team Score</label>
-    <input type="number" class="form-control" @bind="RedTeamScore" min="0" />
+<div class="input-group mb-4">
+    <span class="input-group-text">Red Team Score</span>
+    <BSInput InputType="InputType.Number" @bind-Value="RedTeamScore" min="0" />
 </div>
 
-<div class="form-group">
-    <label>Match Date and Time</label>
-    <input type="datetime-local" class="form-control" @bind="MatchDateTime"/>
+<div class="input-group mb-4">
+    <span class="input-group-text">Match Date and Time</span>
+    <BSInput InputType="InputType.DateTimeLocal" @bind-Value="MatchDateTime"/>
 </div>
 
-<button class="btn btn-primary" @onclick="CreateMatch" disabled="@(SelectedBlueTeam.Count < 2 || SelectedRedTeam.Count < 2 || (BlueTeamScore == 0 && RedTeamScore == 0))">Create Match</button>
+<button class="btn btn-primary" @onclick="CreateMatch" disabled="@(SelectedBlueTeam.Count < 2 && SelectedRedTeam.Count < 2 || (BlueTeamScore == 0 && RedTeamScore == 0))">Create Match</button>
 
 @code {
     private IEnumerable<Player> Players { get; set; } = new List<Player>();
-    private List<Player> SelectedBlueTeam { get; } = new();
+    private List<Player> SelectedBlueTeam { get; set; } = new();
     private int BlueTeamScore { get; set; }
-    private List<Player> SelectedRedTeam { get; } = new();
+    private List<Player> SelectedRedTeam { get; set; } = new();
     private int RedTeamScore { get; set; }
     private DateTime MatchDateTime { get; set; } = DateTime.Now;
 
@@ -81,39 +71,33 @@
         Navigation.NavigateTo("", true);
     }
     
-    private void SelectBlueTeamPlayer(ChangeEventArgs e, int index)
+    private void SelectBlueTeam(ChangeEventArgs e)
     {
-        var playerId = e.Value?.ToString();
-        var player = Players.FirstOrDefault(p => p.Id == playerId);
-
-        if (player != null)
+        if (e.Value == null)
         {
-            if (index < SelectedBlueTeam.Count)
-            {
-                SelectedBlueTeam[index] = player;
-            }
-            else
-            {
-                SelectedBlueTeam.Add(player);
-            }
+            return;
         }
+        
+        var selectedPlayerIds = (e.Value as IEnumerable<string>)?.ToList();
+        SelectedBlueTeam = Players.Where(p => selectedPlayerIds.Contains(p.Id)).ToList();
     }
 
-    private void SelectRedTeamPlayer(ChangeEventArgs e, int index)
+    private void SelectRedTeam(ChangeEventArgs e)
     {
-        var playerId = e.Value?.ToString();
-        var player = Players.FirstOrDefault(p => p.Id == playerId);
-
-        if (player != null)
+        if (e.Value == null)
         {
-            if (index < SelectedRedTeam.Count)
-            {
-                SelectedRedTeam[index] = player;
-            }
-            else
-            {
-                SelectedRedTeam.Add(player);
-            }
+            return;
+        }
+        
+        var selectedPlayerIds = (e.Value as IEnumerable<string>)?.ToList();
+        SelectedRedTeam = Players.Where(p => selectedPlayerIds.Contains(p.Id)).ToList();
+    }
+    
+    private void RemoveRedTeamPlayer(int index)
+    {
+        if (index >= 0 && index < SelectedRedTeam.Count)
+        {
+            SelectedRedTeam.RemoveAt(index);
         }
     }
 }
