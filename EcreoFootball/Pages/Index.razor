@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
 @inject IConfiguration Configuration
 
 <BSContainer>
@@ -41,6 +42,7 @@
 
 @code
 {
+    private HubConnection? _hubConnection;
     private List<MatchDto> _matches = new();
     private List<Player> _players = new();
 
@@ -50,5 +52,18 @@
         var client = new Client(webApiBaseAddress, new HttpClient());
         _matches = (await client.GetMatchesAsync()).ToList();
         _players = (await client.GetPlayersAsync()).ToList();
+        
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{webApiBaseAddress}matchhub")
+            .Build();
+            
+        _hubConnection.On<MatchDto>("ReceiveNewMatch", (match) =>
+        {
+            _matches.Insert(0, match);
+            StateHasChanged();
+            return Task.CompletedTask;
+        });
+    
+        await _hubConnection.StartAsync();
     }
 }
