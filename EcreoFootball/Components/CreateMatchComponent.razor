@@ -67,6 +67,9 @@
         };
 
         client?.CreateMatchAsync(newMatch);
+
+        RedTeamScore = 0;
+        BlueTeamScore = 0;
     }
     
     private void SelectBlueTeam(ChangeEventArgs e)
