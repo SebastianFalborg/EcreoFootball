@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
 @inject IConfiguration Configuration
+@inject NavigationManager Navigation
 
 <BSContainer>
     <BSRow>
@@ -19,7 +20,7 @@
                               </p>
                               @player.Rating.ToString("N1")
                           </BSCard>
-                          <BSButton IsDisabled Color="BSColor.Primary">Profil</BSButton>
+                          <BSButton OnClick="@(() => Navigation.NavigateTo($"/player/{player.Id}"))" Color="BSColor.Primary">Profil</BSButton>
                       </BSCard>
                   </BSCard>
               }

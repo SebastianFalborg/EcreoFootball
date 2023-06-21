@@ -1,0 +1,42 @@
+﻿@page "/Player/{playerId}"
+@inject IConfiguration Configuration
+
+<BSContainer>
+    <BSRow>
+        <h1>Spillerside</h1>
+        <BSCard CardType="CardType.Card" class="m-2" style="width: 12rem;">
+            <BSCard CardType="CardType.Body">
+                <BSCard CardType="CardType.Title">@_player.Name</BSCard>
+                <BSCard CardType="CardType.Text">
+                    <p>
+                        <b>Rating</b>
+                    </p>
+                    @_player.Rating.ToString("N1")
+                </BSCard>
+            </BSCard>
+        </BSCard>
+    </BSRow>
+    <BSRow>
+        <h2>Spil</h2>
+        @foreach (var match in _matches)
+        {
+            <MatchComponent Match="match"></MatchComponent>
+        }
+    </BSRow>
+</BSContainer>
+
+@code {
+    [Parameter]
+    public string PlayerId { get; set; }
+    
+    private List<MatchDto> _matches = new();
+    private Player _player = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
+        var client = new Client(webApiBaseAddress, new HttpClient());
+        _matches = (await client.GetMatchesWithPlayerAsync(PlayerId)).ToList();
+        _player = (await client.GetPlayerAsync(PlayerId));
+    }
+}
