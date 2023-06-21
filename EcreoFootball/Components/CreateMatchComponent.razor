@@ -59,8 +59,8 @@
     {
         var newMatch = new Match
         {
-            BlueTeam = SelectedBlueTeam.Select(x => x.Id),
-            RedTeam = SelectedRedTeam.Select(x => x.Id),
+            BlueTeam = SelectedBlueTeam.Select(x => x),
+            RedTeam = SelectedRedTeam.Select(x => x),
             BlueScore = BlueTeamScore,
             RedScore = RedTeamScore,
             Timestamp = MatchDateTime
@@ -91,13 +91,5 @@
         
         var selectedPlayerIds = (e.Value as IEnumerable<string>)?.ToList();
         SelectedRedTeam = Players.Where(p => selectedPlayerIds.Contains(p.Id)).ToList();
-    }
-    
-    private void RemoveRedTeamPlayer(int index)
-    {
-        if (index >= 0 && index < SelectedRedTeam.Count)
-        {
-            SelectedRedTeam.RemoveAt(index);
-        }
     }
 }

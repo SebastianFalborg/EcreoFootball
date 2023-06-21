@@ -628,22 +628,32 @@ namespace EcreoFootballApi
         [System.Text.Json.Serialization.JsonPropertyName("blueTeam")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.IEnumerable<string> BlueTeam { get; set; }
+        public System.Collections.Generic.IEnumerable<Player> BlueTeam { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("redTeam")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.IEnumerable<string> RedTeam { get; set; }
+        public System.Collections.Generic.IEnumerable<Player> RedTeam { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("blueScore")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int BlueScore { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("blueRatingAdjustment")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public double BlueRatingAdjustment { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("redScore")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int RedScore { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("redRatingAdjustment")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public double RedRatingAdjustment { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("timestamp")]
 
@@ -671,10 +681,20 @@ namespace EcreoFootballApi
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int BlueScore { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("blueRatingAdjustment")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public double BlueRatingAdjustment { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("redScore")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int RedScore { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("redRatingAdjustment")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public double RedRatingAdjustment { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("timestamp")]
 

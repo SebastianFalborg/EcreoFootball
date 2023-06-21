@@ -3,9 +3,11 @@
     <BSTHead>
         <BSTR>
             <th width="200">Blåt hold</th>
-            <th width="35">Resultat</th>
+            <th width="40">Resultat</th>
+            <th width="35">Rating +/-</th>
             <th width="200">Rød hold</th>
-            <th width="35">Resultat</th>
+            <th width="40">Resultat</th>
+            <th width="35">Rating +/-</th>
         </BSTR>
     </BSTHead>
     <BSTBody>
@@ -22,6 +24,9 @@
                 @Match.BlueScore
             </BSTD>
             <BSTD>
+                @Match.BlueRatingAdjustment
+            </BSTD>
+            <BSTD>
                 <BSListGroup class="no-bullets">
                     @foreach (var player in Match.RedTeam)
                     {
@@ -31,6 +36,9 @@
             </BSTD>
             <BSTD>
                 @Match.RedScore
+            </BSTD>
+            <BSTD>
+                @Match.RedRatingAdjustment
             </BSTD>
         </BSTR>
     </BSTBody>
