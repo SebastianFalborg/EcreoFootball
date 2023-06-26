@@ -52,7 +52,7 @@
         var webApiBaseAddress = Configuration["webApiBaseAddress"] ?? string.Empty;
         var client = new Client(webApiBaseAddress, new HttpClient());
         _matches = (await client.GetMatchesAsync()).ToList();
-        _players = (await client.GetPlayersAsync()).ToList();
+        _players = (await client.GetPlayersAsync(orderByRating: true)).ToList();
         
         _hubConnection = new HubConnectionBuilder()
             .WithUrl($"{webApiBaseAddress}matchhub")
