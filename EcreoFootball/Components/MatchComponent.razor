@@ -1,4 +1,5 @@
-﻿<h5>Spiltid: @Match.Timestamp.ToString("dd/MM/yyyy - HH:mm")</h5>
+﻿@using System.Globalization
+<h5>Spiltid: @Match.Timestamp.ToString("dd/MM/yyyy - HH:mm", CultureInfo.InvariantCulture)</h5>
 <BStable>
     <BSTHead>
         <BSTR>
